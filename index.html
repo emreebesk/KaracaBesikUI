@@ -52,7 +52,7 @@
             xhr.onload = function() {
             var endTime = new Date().getTime();
             var duration = (endTime - startTime) / 1000;
-            var fileSizeInBytes = 50 * 1024 * 1024; // Dosyanın boyutu
+            var fileSizeInBytes = 300 * 1024 * 1024; // Dosyanın boyutu
             var speedInMbps = (fileSizeInBytes * 8) / (duration * 1000 * 1000);
 
             document.getElementById('result').innerHTML = 'İndirme Süresi: ' + duration.toFixed(2) + ' saniye<br>İndirme Hızı: ' + speedInMbps.toFixed(2) + ' Mbps';
