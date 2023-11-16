@@ -48,7 +48,7 @@
 
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'blob';
-    xhr.open('GET', 'https://bit.ly/1GB-testfile', true);
+    xhr.open('GET', 'http://212.183.159.230:81/200MB.zip', true);
     xhr.onload = function() {
         var endTime = new Date().getTime();
         var duration = (endTime - startTime) / 1000;
