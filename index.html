@@ -56,8 +56,10 @@
             var speedInMbps = (fileSizeInBytes * 8) / (duration * 1000 * 1000);
 
             document.getElementById('result').innerHTML = 'İndirme Süresi: ' + duration.toFixed(2) + ' saniye<br>İndirme Hızı: ' + speedInMbps.toFixed(2) + ' Mbps';
-    };
-    xhr.send();
+            document.getElementById('uploadForm').style.display = 'block'; // Formu görünür yap
+            document.getElementById('statusMessage').innerText = '';
+            };
+            xhr.send();
         }
         
         document.getElementById('uploadForm').addEventListener('submit', function(event) {
