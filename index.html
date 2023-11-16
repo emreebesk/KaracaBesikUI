@@ -45,22 +45,31 @@
         function downloadTest() {
             document.getElementById('statusMessage').innerText = 'Dosya indiriliyor...';
             var startTime = new Date().getTime();
-
+        
             var xhr = new XMLHttpRequest();
             xhr.responseType = 'blob';
             xhr.open('GET', 'https://karacabesik-project1-api.azurewebsites.net/Download/DownloadFile', true);
             xhr.onload = function() {
-            var endTime = new Date().getTime();
-            var duration = (endTime - startTime) / 1000;
-            var fileSizeInBytes = 300 * 1024 * 1024; // Dosyanın boyutu
-            var speedInMbps = (fileSizeInBytes * 8) / (duration * 1000 * 1000);
-
-            document.getElementById('result').innerHTML = 'İndirme Süresi: ' + duration.toFixed(2) + ' saniye<br>İndirme Hızı: ' + speedInMbps.toFixed(2) + ' Mbps';
-            document.getElementById('uploadForm').style.display = 'block'; // Formu görünür yap
-            document.getElementById('statusMessage').innerText = '';
+                var endTime = new Date().getTime();
+                var duration = (endTime - startTime) / 1000;
+                var fileSizeInBytes = 300 * 1024 * 1024; // Dosyanın boyutu
+                var speedInMbps = (fileSizeInBytes * 8) / (duration * 1000 * 1000);
+        
+                document.getElementById('result').innerHTML = 'İndirme Süresi: ' + duration.toFixed(2) + ' saniye<br>İndirme Hızı: ' + speedInMbps.toFixed(2) + ' Mbps';
+                
+                // Dosyayı indir
+                var blob = new Blob([xhr.response], { type: 'application/octet-stream' });
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'downloadedfile.zip';
+                link.click();
+        
+                document.getElementById('uploadForm').style.display = 'block'; // Formu görünür yap
+                document.getElementById('statusMessage').innerText = '';
             };
             xhr.send();
         }
+        
         
         document.getElementById('uploadForm').addEventListener('submit', function(event) {
             event.preventDefault();
