@@ -34,7 +34,7 @@
         
         function pingTest() {
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'https://karacabesik-project1-api.azurewebsites.net/api/Ping', true);
+            xhr.open('GET', 'https://karacabesik-project1-api.azurewebsites.net/api/PingTest', true);
             xhr.onload = function() {
                 document.getElementById('pingResult').innerText = 'Ping sonucu: ' + xhr.responseText;
                 downloadTest();
@@ -48,11 +48,11 @@
         
             var xhr = new XMLHttpRequest();
             xhr.responseType = 'blob';
-            xhr.open('GET', 'https://karacabesik-project1-api.azurewebsites.net/api/Download/download', true);
+            xhr.open('GET', 'http://ipv4.download.thinkbroadband.com/50MB.zip', true);
             xhr.onload = function() {
                 var endTime = new Date().getTime();
                 var duration = (endTime - startTime) / 1000;
-                var fileSizeInBytes = 50 * 1024 * 1024;
+                var fileSizeInBytes = xhr.response.size; // İndirilen dosyanın boyutu
                 var speedInMbps = (fileSizeInBytes * 8) / (duration * 1000 * 1000);
         
                 document.getElementById('result').innerHTML = 'İndirme Süresi: ' + duration.toFixed(2) + ' saniye<br>İndirme Hızı: ' + speedInMbps.toFixed(2) + ' Mbps';
@@ -64,6 +64,7 @@
         
         document.getElementById('uploadForm').addEventListener('submit', function(event) {
             event.preventDefault();
+            var startTime = new Date().getTime();
             document.getElementById('statusMessage').innerText = 'Dosya yükleniyor...';
         
             var formData = new FormData();
@@ -73,13 +74,16 @@
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'https://karacabesik-project1-api.azurewebsites.net/api/Upload', true);
             xhr.onload = function() {
-                document.getElementById('uploadResult').innerHTML = 'Yükleme sonucu: ' + xhr.responseText;
+                var endTime = new Date().getTime();
+                var duration = (endTime - startTime) / 1000;
+                var fileSizeInBytes = fileInput.files[0].size; // Yüklenen dosyanın boyutu
+                var speedInMbps = (fileSizeInBytes * 8) / (duration * 1000 * 1000);
+
+                document.getElementById('uploadResult').innerHTML = 'Yükleme Süresi: ' + duration.toFixed(2) + ' saniye<br>Yükleme Hızı: ' + speedInMbps.toFixed(2) + ' Mbps';
                 document.getElementById('statusMessage').innerText = '';
             };
             xhr.send(formData);
         });
-        
     </script>
 </body>
 </html>
-
